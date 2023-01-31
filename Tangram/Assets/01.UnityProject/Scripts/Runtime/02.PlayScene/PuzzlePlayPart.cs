@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PuzzlePlayPart : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerMoveHandler
+public class PuzzlePlayPart : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     private bool isClicked = false;
+    private RectTransform objRect = default;
+    private PuzzleInitZone puzzleInitZone = default;
 
     // Start is called before the first frame update
     void Start()
     {
         isClicked = false;
+        objRect = gameObject.GetRect();
+        puzzleInitZone = transform.parent.gameObject.GetComponentMust<PuzzleInitZone>();
     }   //  Start()
 
     // Update is called once per frame
@@ -23,29 +27,23 @@ public class PuzzlePlayPart : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     public void OnPointerDown(PointerEventData eventData)
     {
         isClicked = true;
-
-        //  DEBUG:
-        //GFunc.Log($"{gameObject.name}을 선택했다.");
     }   //  OnPointerDown()
 
     //! 마우스 버튼에서 손을 뗐을 때 동작하는 함수
     public void OnPointerUp(PointerEventData eventData)
     {
         isClicked = false;
-
-        //  DEBUG:
-        //GFunc.Log($"{gameObject.name}을 선택 해제했다.");
     }   //  OnPointerUp()
 
     //! 마우스를 드래그 중일 때 동작하는 함수
-    public void OnPointerMove(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
         if (isClicked == true)
         {
-            gameObject.SetLocalPos(eventData.position.x, eventData.position.y, 0f);
-            GFunc.Log($"마우스의 포지션을 눈으로 확인 : {eventData.position.x}, {eventData.position.y}");
+            //  절대 좌표를 설정하는 로직 -> 상대적 움직임을 현재 포지션에 더하는 로직으로 수정 eventData.delta
+            gameObject.AddAnchoredPos(eventData.delta / puzzleInitZone.parentCanvas.scaleFactor);
         }   //  if : 현재 오브젝트를 선택한 경우
-    }   //  OnPointerMove()
+    }   //  OnDrag()
 
 
 
