@@ -6,3 +6,4 @@ Copy mobile tangram game
 2023-03-31 / v0.2.1 / Puzzle object drag
 2023-03-31 / v0.2.2 / Singletone, GameManager
 2023-03-31 / v0.2.3 / Drag and Drop
+2023-03-31 / v0.2.31 / Drag and Drop Modigy

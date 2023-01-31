@@ -59,7 +59,7 @@ public class PlayLevel : MonoBehaviour
         List<PuzzleLvPart> sameTypes = GetSameTypePuzzle(puzzleType);
 
         float minDistance = float.MaxValue;
-        float distance = 0f;
+        float distance = float.MaxValue;
         int index = 0;
         PuzzleLvPart result = default;
 
